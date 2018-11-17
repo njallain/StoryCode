@@ -73,11 +73,7 @@ class BookController: UIViewController, SceneController, ScenePresenter {
 	}
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		self.navigationItem.backBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(navigateBack))
 		self.setupView()
-	}
-	@objc func navigateBack() {
-		self.popScene(options: [.animated])
 	}
 	override func viewDidAppear(_ animated: Bool) {
 		self.view.subviews[0].setNeedsLayout()
@@ -90,7 +86,6 @@ class BookController: UIViewController, SceneController, ScenePresenter {
 			guard let self = self else {return}
 			self.scene.model.title = textModel.text
 			self.titleLabel.text = textModel.text
-			self.view.setNeedsLayout()
 			self.scene.modelChanged()
 		}
 	}
@@ -101,7 +96,6 @@ class BookController: UIViewController, SceneController, ScenePresenter {
 			guard let self = self else {return}
 			self.scene.model.description = textModel.text
 			self.descriptionLabel.text = textModel.text
-			self.view.setNeedsLayout()
 			self.scene.modelChanged()
 		}
 	}

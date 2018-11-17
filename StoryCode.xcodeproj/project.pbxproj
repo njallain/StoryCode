@@ -18,6 +18,9 @@
 		734A83BE219BB61700116AEA /* SceneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734A83BD219BB61700116AEA /* SceneViewController.swift */; };
 		734A83C0219BB67900116AEA /* EditTextController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734A83BF219BB67900116AEA /* EditTextController.swift */; };
 		734A83C221A05D6F00116AEA /* AutoLayoutExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734A83C121A05D6F00116AEA /* AutoLayoutExtensions.swift */; };
+		734A83C521A0AE7600116AEA /* NavigationSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734A83C421A0AE7600116AEA /* NavigationSegue.swift */; };
+		734A83C721A0AEBF00116AEA /* ModalSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734A83C621A0AEBF00116AEA /* ModalSegue.swift */; };
+		734A83C921A0AEEA00116AEA /* DetailSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734A83C821A0AEEA00116AEA /* DetailSegue.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +49,9 @@
 		734A83BD219BB61700116AEA /* SceneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneViewController.swift; sourceTree = "<group>"; };
 		734A83BF219BB67900116AEA /* EditTextController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTextController.swift; sourceTree = "<group>"; };
 		734A83C121A05D6F00116AEA /* AutoLayoutExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoLayoutExtensions.swift; sourceTree = "<group>"; };
+		734A83C421A0AE7600116AEA /* NavigationSegue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationSegue.swift; sourceTree = "<group>"; };
+		734A83C621A0AEBF00116AEA /* ModalSegue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalSegue.swift; sourceTree = "<group>"; };
+		734A83C821A0AEEA00116AEA /* DetailSegue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailSegue.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +75,7 @@
 		734A8381218F32A800116AEA = {
 			isa = PBXGroup;
 			children = (
+				734A83C321A0ABE800116AEA /* BookShelf */,
 				734A838C218F32A800116AEA /* StoryCode */,
 				734A83A1218F32A900116AEA /* StoryCodeTests */,
 				734A838B218F32A800116AEA /* Products */,
@@ -87,17 +94,14 @@
 		734A838C218F32A800116AEA /* StoryCode */ = {
 			isa = PBXGroup;
 			children = (
-				734A838D218F32A800116AEA /* AppDelegate.swift */,
 				734A8394218F32A900116AEA /* Assets.xcassets */,
-				734A8396218F32A900116AEA /* LaunchScreen.storyboard */,
 				734A8399218F32A900116AEA /* Info.plist */,
 				734A83AD218F333400116AEA /* StoryScene.swift */,
-				734A83BD219BB61700116AEA /* SceneViewController.swift */,
-				734A83B921970F6000116AEA /* BookShelfController.swift */,
-				734A83BB2197172400116AEA /* BookController.swift */,
-				734A83BF219BB67900116AEA /* EditTextController.swift */,
-				734A83B32190FF2C00116AEA /* ViewModels.swift */,
+				734A83C421A0AE7600116AEA /* NavigationSegue.swift */,
+				734A83C621A0AEBF00116AEA /* ModalSegue.swift */,
+				734A83C821A0AEEA00116AEA /* DetailSegue.swift */,
 				734A83C121A05D6F00116AEA /* AutoLayoutExtensions.swift */,
+				734A83BD219BB61700116AEA /* SceneViewController.swift */,
 			);
 			path = StoryCode;
 			sourceTree = "<group>";
@@ -109,6 +113,19 @@
 				734A83A4218F32A900116AEA /* Info.plist */,
 			);
 			path = StoryCodeTests;
+			sourceTree = "<group>";
+		};
+		734A83C321A0ABE800116AEA /* BookShelf */ = {
+			isa = PBXGroup;
+			children = (
+				734A83B921970F6000116AEA /* BookShelfController.swift */,
+				734A83BB2197172400116AEA /* BookController.swift */,
+				734A83B32190FF2C00116AEA /* ViewModels.swift */,
+				734A83BF219BB67900116AEA /* EditTextController.swift */,
+				734A8396218F32A900116AEA /* LaunchScreen.storyboard */,
+				734A838D218F32A800116AEA /* AppDelegate.swift */,
+			);
+			path = BookShelf;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -211,13 +228,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				734A83C521A0AE7600116AEA /* NavigationSegue.swift in Sources */,
 				734A83B42190FF2C00116AEA /* ViewModels.swift in Sources */,
 				734A83BC2197172400116AEA /* BookController.swift in Sources */,
 				734A838E218F32A800116AEA /* AppDelegate.swift in Sources */,
 				734A83BE219BB61700116AEA /* SceneViewController.swift in Sources */,
+				734A83C721A0AEBF00116AEA /* ModalSegue.swift in Sources */,
 				734A83C221A05D6F00116AEA /* AutoLayoutExtensions.swift in Sources */,
 				734A83C0219BB67900116AEA /* EditTextController.swift in Sources */,
 				734A83AE218F333400116AEA /* StoryScene.swift in Sources */,
+				734A83C921A0AEEA00116AEA /* DetailSegue.swift in Sources */,
 				734A83BA21970F6000116AEA /* BookShelfController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
