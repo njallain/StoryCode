@@ -17,6 +17,7 @@
 		734A83BC2197172400116AEA /* BookController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734A83BB2197172400116AEA /* BookController.swift */; };
 		734A83BE219BB61700116AEA /* SceneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734A83BD219BB61700116AEA /* SceneViewController.swift */; };
 		734A83C0219BB67900116AEA /* EditTextController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734A83BF219BB67900116AEA /* EditTextController.swift */; };
+		734A83C221A05D6F00116AEA /* AutoLayoutExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734A83C121A05D6F00116AEA /* AutoLayoutExtensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,7 @@
 		734A83BB2197172400116AEA /* BookController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookController.swift; sourceTree = "<group>"; };
 		734A83BD219BB61700116AEA /* SceneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneViewController.swift; sourceTree = "<group>"; };
 		734A83BF219BB67900116AEA /* EditTextController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTextController.swift; sourceTree = "<group>"; };
+		734A83C121A05D6F00116AEA /* AutoLayoutExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoLayoutExtensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +97,7 @@
 				734A83BB2197172400116AEA /* BookController.swift */,
 				734A83BF219BB67900116AEA /* EditTextController.swift */,
 				734A83B32190FF2C00116AEA /* ViewModels.swift */,
+				734A83C121A05D6F00116AEA /* AutoLayoutExtensions.swift */,
 			);
 			path = StoryCode;
 			sourceTree = "<group>";
@@ -212,6 +215,7 @@
 				734A83BC2197172400116AEA /* BookController.swift in Sources */,
 				734A838E218F32A800116AEA /* AppDelegate.swift in Sources */,
 				734A83BE219BB61700116AEA /* SceneViewController.swift in Sources */,
+				734A83C221A05D6F00116AEA /* AutoLayoutExtensions.swift in Sources */,
 				734A83C0219BB67900116AEA /* EditTextController.swift in Sources */,
 				734A83AE218F333400116AEA /* StoryScene.swift in Sources */,
 				734A83BA21970F6000116AEA /* BookShelfController.swift in Sources */,
