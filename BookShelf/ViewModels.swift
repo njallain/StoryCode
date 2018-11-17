@@ -18,18 +18,21 @@ public struct Book {
 	public static let none = Book()
 	public var id: Int
 	public var title: String
-	var description: String
+	public var description: String
+	public var text: String
 	
 	public init(title: String) {
 		self.title = title
 		self.id = nextBookId
 		nextBookId += 1
 		self.description = ""
+		self.text = "some text to read"
 	}
 	private init() {
 		self.id = 0
 		self.title = ""
 		self.description = ""
+		self.text = ""
 	}
 }
 

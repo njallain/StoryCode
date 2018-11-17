@@ -21,6 +21,7 @@
 		734A83C521A0AE7600116AEA /* NavigationSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734A83C421A0AE7600116AEA /* NavigationSegue.swift */; };
 		734A83C721A0AEBF00116AEA /* ModalSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734A83C621A0AEBF00116AEA /* ModalSegue.swift */; };
 		734A83C921A0AEEA00116AEA /* DetailSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734A83C821A0AEEA00116AEA /* DetailSegue.swift */; };
+		734A83CB21A0C40800116AEA /* ReadBookController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734A83CA21A0C40800116AEA /* ReadBookController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +53,7 @@
 		734A83C421A0AE7600116AEA /* NavigationSegue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationSegue.swift; sourceTree = "<group>"; };
 		734A83C621A0AEBF00116AEA /* ModalSegue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalSegue.swift; sourceTree = "<group>"; };
 		734A83C821A0AEEA00116AEA /* DetailSegue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailSegue.swift; sourceTree = "<group>"; };
+		734A83CA21A0C40800116AEA /* ReadBookController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadBookController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +122,7 @@
 			children = (
 				734A83B921970F6000116AEA /* BookShelfController.swift */,
 				734A83BB2197172400116AEA /* BookController.swift */,
+				734A83CA21A0C40800116AEA /* ReadBookController.swift */,
 				734A83B32190FF2C00116AEA /* ViewModels.swift */,
 				734A83BF219BB67900116AEA /* EditTextController.swift */,
 				734A8396218F32A900116AEA /* LaunchScreen.storyboard */,
@@ -238,6 +241,7 @@
 				734A83C0219BB67900116AEA /* EditTextController.swift in Sources */,
 				734A83AE218F333400116AEA /* StoryScene.swift in Sources */,
 				734A83C921A0AEEA00116AEA /* DetailSegue.swift in Sources */,
+				734A83CB21A0C40800116AEA /* ReadBookController.swift in Sources */,
 				734A83BA21970F6000116AEA /* BookShelfController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

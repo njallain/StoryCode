@@ -14,6 +14,7 @@ struct BookScene: SceneDefinition {
 	
 	let editTitle = ModalSegue<BookScene, EditTextScene>()
 	let editDescription = ModalSegue<BookScene, EditTextScene>()
+	let read = NavigationSegue<BookScene, ReadBookScene>()
 }
 class BookController: UIViewController, SceneController, ScenePresenter {
 	
@@ -22,6 +23,7 @@ class BookController: UIViewController, SceneController, ScenePresenter {
 	var descriptionLabel: UILabel!
 	var editTitleButton: UIButton!
 	var editDescriptionButton: UIButton!
+	var readButton: UIButton!
 	
 	func setup(scene: Scene<BookScene>) {
 		self.scene = scene
@@ -34,6 +36,7 @@ class BookController: UIViewController, SceneController, ScenePresenter {
 		descriptionLabel = UILabel()
 		editTitleButton = UIButton(type:.roundedRect)
 		editDescriptionButton = UIButton(type:.roundedRect)
+		readButton = UIButton(type: .roundedRect)
 		titleLabel.font = UIFont.preferredFont(forTextStyle: .headline)
 		titleLabel.numberOfLines = 3
 		titleLabel.textAlignment = .center
@@ -43,8 +46,9 @@ class BookController: UIViewController, SceneController, ScenePresenter {
 		
 		editTitleButton.setTitle("Edit Title", for: .normal)
 		editDescriptionButton.setTitle("Edit Description", for: .normal)
+		readButton.setTitle("Read", for: .normal)
 		updateViewModel()
-		let stackView = UIStackView(arrangedSubviews: [titleLabel, editTitleButton, descriptionLabel, editDescriptionButton, UIView.spacer()])
+		let stackView = UIStackView(arrangedSubviews: [titleLabel, editTitleButton, descriptionLabel, editDescriptionButton, UIView.spacer(), readButton])
 		stackView.translatesAutoresizingMaskIntoConstraints = false
 		stackView.axis = .vertical
 		stackView.alignment = .fill
@@ -70,6 +74,7 @@ class BookController: UIViewController, SceneController, ScenePresenter {
 		self.descriptionLabel.text = scene.model.description
 		self.editTitleButton.addTarget(self, action: #selector(editTitle), for: .touchUpInside)
 		self.editDescriptionButton.addTarget(self, action: #selector(editDescription), for: .touchUpInside)
+		self.readButton.addTarget(self, action: #selector(read), for: .touchUpInside)
 	}
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -97,6 +102,11 @@ class BookController: UIViewController, SceneController, ScenePresenter {
 			self.scene.model.description = textModel.text
 			self.descriptionLabel.text = textModel.text
 			self.scene.modelChanged()
+		}
+	}
+	@objc func read(_ sender: UIButton) {
+		let controller = ReadBookController()
+		self.go(\.read, controller: controller, model: scene.model.text) { _ in
 		}
 	}
 	var scenePresenter: ScenePresenter { return self }
