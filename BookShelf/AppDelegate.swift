@@ -29,11 +29,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		let scene = Scene(definition: BookShelfScene(), story: story, model: bookshelf)
 		bookshelfController.setup(scene: scene)
 		let nav = UINavigationController(rootViewController: bookshelfController)
-		let detailScene = Scene(definition: BookScene(), story: story, model: .none)
-		let bookController = BookController()
-		bookController.setup(scene: detailScene)
+//		let detailScene = Scene(definition: BookScene(), story: story, model: .none)
+//		let bookController = BookController()
+//		bookController.setup(scene: detailScene)
 		let splitView = UISplitViewController()
-		splitView.viewControllers = [nav, UINavigationController(rootViewController: bookController)]
+		splitView.viewControllers = [nav, UINavigationController(rootViewController: UIViewController())]
 		splitView.delegate = self
 		nav.delegate = self
 		window.rootViewController = splitView
