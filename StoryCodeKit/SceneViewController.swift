@@ -12,7 +12,7 @@ import UIKit
 /**
 Default ScenePresenter implementations for UIViewControllers that are SceneControllers
 */
-extension SceneController where Self: UIViewController {
+public extension SceneController where Self: UIViewController {
 	func pushScene<Controller: SceneController>(controller: Controller, options: SegueOptions) {
 		guard let vc = controller as? UIViewController else { return }
 		self.navigationController?.pushViewController(vc, animated: options.contains(.animated))

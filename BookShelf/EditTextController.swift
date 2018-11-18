@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import StoryCodeKit
 
 struct EditTextScene: SceneDefinition {
 	var name: String { return "editText" }

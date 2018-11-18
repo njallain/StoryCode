@@ -39,9 +39,9 @@ public protocol ScenePresenter: AnyObject {
 }
 
 public class Scene<Definition: SceneDefinition> {
-	let definition: Definition
-	let story: Story
-	var model: Definition.Model
+	public let definition: Definition
+	public let story: Story
+	public var model: Definition.Model
 	var backSegue: AnyActiveSegue? = nil
 	var modelChangedCallback: (Definition.Model) -> Void = {_ in return}
 	public init(definition: Definition, story: Story, model: Definition.Model) {
@@ -49,10 +49,10 @@ public class Scene<Definition: SceneDefinition> {
 		self.definition = definition
 		self.story = story
 	}
-	func modelChanged() { modelChangedCallback(model) }
+	public func modelChanged() { modelChangedCallback(model) }
 }
 
-extension SceneController {
+public extension SceneController {
 	func go<DestinationController: SceneController, SegueType: SceneSegue>(
 		_ path: KeyPath<SceneType, SegueType>,
 		controller: DestinationController,
@@ -79,7 +79,7 @@ extension SceneController {
 
 public struct SegueOptions: OptionSet {
 	public let rawValue: Int
-	static let animated = SegueOptions(rawValue: 1 << 0)
+	public static let animated = SegueOptions(rawValue: 1 << 0)
 	public init(rawValue: Int) {
 		self.rawValue = rawValue
 	}
@@ -103,6 +103,7 @@ public protocol AnyActiveSegue {
 }
 
 public struct Story {
+	public init() {}
 	private var scenes = [AnySceneDefinition]()
 	
 }

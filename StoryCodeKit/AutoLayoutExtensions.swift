@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-extension UIView {
+public extension UIView {
   func addAutoLayoutSubviews(_ views: UIView ...) {
     views.forEach {
       self.addSubview($0)

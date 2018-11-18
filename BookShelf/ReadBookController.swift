@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import StoryCodeKit
 
 struct ReadBookScene: SceneDefinition {
 	var name: String { return "read" }
