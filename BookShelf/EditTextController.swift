@@ -11,11 +11,11 @@ import UIKit
 import StoryCodeKit
 
 struct EditTextScene: SceneDefinition {
-	var name: String { return "editText" }
 	typealias Model = EditText
-	
+	func restoreValue(_ model: Model) -> String { return model.text }
 }
 class EditTextController: UIViewController, SceneController, ScenePresenter {
+	let segues = EditTextScene()
 	var scenePresenter: ScenePresenter { return self }
 	var scene: Scene<EditTextScene>!
 	var textField: UITextView!

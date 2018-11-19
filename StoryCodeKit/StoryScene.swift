@@ -10,13 +10,12 @@ import Foundation
 
 
 public protocol AnySceneDefinition {
-	var name: String {get}
-	
 }
 
 public protocol SceneDefinition: AnySceneDefinition {
 	init()
 	associatedtype Model
+	func restoreValue(_ model: Model) -> String
 }
 
 public class Scene<Definition: SceneDefinition> {

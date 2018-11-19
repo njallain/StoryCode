@@ -13,33 +13,64 @@ import XCTest
 class SegueTests: XCTestCase {
 	
 	func testDetailSegue() {
-		let root = RootController()
-		let story = Story()
-		let campaigns = sampleCampaigns()
-		let campaignController = CampaignController()
-		root.setup(scene: Scene(definition: RootScene(), story: story, model: campaigns))
-		var modelUpdated = false
-		root.go(\.viewCampaign, controller: campaignController, model: campaigns[0]) {
-			modelUpdated = true
-			root.scene.model[0] = $0
-		}
+		verifySegue(root.segues.viewCampaign, source: root, destination: campaignController, model: campaigns[0])
 		assertNotNil(root.detailController)
 		assertTrue(root.detailController === campaignController)
-		assertFalse(modelUpdated)
-		assertNotNil(campaignController.scene)
 		assertEqual(campaignController.scene.model.id, campaigns[0].id)
-		campaignController.scene.modelChanged()
+	}
+	func testNavigateSegue() {
+		let campaign = campaigns[0]
+		let npc = campaign.npcs[0]
+		campaignController.setup(scene: Scene(definition: CampaignScene(), story: story, model: campaign))
+		verifySegue(campaignController.segues.viewNpc, source: campaignController, destination: npcController, model: npc)
+		assertNotNil(campaignController.pushedController)
+		assertTrue(campaignController.pushedController === npcController)
+		assertEqual(npcController.scene.model.id, campaign.npcs[0].id)
+	}
+
+	func testModalSegue() {
+		let campaign = campaigns[0]
+		campaignController.setup(scene: Scene(definition: CampaignScene(), story: story, model: campaign))
+		verifySegue(campaignController.segues.editName, source: campaignController, destination: textController, model: campaign.name)
+		assertNotNil(campaignController.modalController)
+		assertTrue(campaignController.modalController === textController)
+		assertEqual(textController.scene.model, campaign.name)
+	}
+
+	private func verifySegue<Source: SceneController, Destination: SceneController, SegueType: SceneSegue>(
+		_ segue: SegueType,
+		source: Source,
+		destination: Destination,
+		model: SegueType.DestinationScene.Model
+	) where Source.SceneType == SegueType.SourceScene, Destination.SceneType == SegueType.DestinationScene {
+		var modelUpdated = false
+		source.go(segue, controller: destination, model: model) { _ in
+			modelUpdated = true
+		}
+		assertFalse(modelUpdated)
+		assertNotNil(destination.scene)
+		destination.scene.modelChanged()
 		assertTrue(modelUpdated)
-		//let rootScene = RootScene(
 	}
 	override func setUp() {
-		// Put setup code here. This method is called before the invocation of each test method in the class.
+		root = RootController()
+		story = Story()
+		campaigns = sampleCampaigns()
+		campaignController = CampaignController()
+		textController = TextController()
+		root.setup(scene: Scene(definition: RootScene(), story: story, model: campaigns))
 	}
 	
 	override func tearDown() {
 		// Put teardown code here. This method is called after the invocation of each test method in the class.
 	}
 	
+	private var root =  RootController()
+	private var story = Story()
+	private var campaigns: [Campaign] = []
+	private var campaignController = CampaignController()
+	private var npcController = NpcController()
+	private var textController = TextController()
 }
 
 

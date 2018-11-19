@@ -10,15 +10,14 @@ import UIKit
 import StoryCodeKit
 
 struct BookScene: SceneDefinition {
-	var name: String { return "book" }
 	typealias Model = Book
-	
-	let editTitle = ModalSegue<BookScene, EditTextScene>()
-	let editDescription = ModalSegue<BookScene, EditTextScene>()
-	let read = NavigationSegue<BookScene, ReadBookScene>()
+	func restoreValue(_ model: Book) -> String { return "\(model.id)" }
+	let editTitle = ModalSegue<BookScene, EditTextScene>("editTitle")
+	let editDescription = ModalSegue<BookScene, EditTextScene>("editDescription")
+	let read = NavigationSegue<BookScene, ReadBookScene>("read")
 }
 class BookController: UIViewController, SceneController, ScenePresenter {
-	
+	let segues = BookScene()
 	var scene: Scene<BookScene>!
 	var titleLabel: UILabel!
 	var descriptionLabel: UILabel!
@@ -88,7 +87,7 @@ class BookController: UIViewController, SceneController, ScenePresenter {
 	@objc func editTitle(_ sender: UIButton) {
 		let controller = EditTextController()
 		let model = EditText(text: scene.model.title)
-		self.go(\.editTitle, controller: controller, model: model) { [weak self] textModel in
+		self.go(segues.editTitle, controller: controller, model: model) { [weak self] textModel in
 			guard let self = self else {return}
 			self.scene.model.title = textModel.text
 			self.titleLabel.text = textModel.text
@@ -98,7 +97,7 @@ class BookController: UIViewController, SceneController, ScenePresenter {
 	@objc func editDescription(_ sender: UIButton) {
 		let controller = EditTextController()
 		let model = EditText(text: scene.model.description)
-		self.go(\.editTitle, controller: controller, model: model) { [weak self] textModel in
+		self.go(segues.editDescription, controller: controller, model: model) { [weak self] textModel in
 			guard let self = self else {return}
 			self.scene.model.description = textModel.text
 			self.descriptionLabel.text = textModel.text
@@ -107,7 +106,7 @@ class BookController: UIViewController, SceneController, ScenePresenter {
 	}
 	@objc func read(_ sender: UIButton) {
 		let controller = ReadBookController()
-		self.go(\.read, controller: controller, model: scene.model.text) { _ in
+		self.go(segues.read, controller: controller, model: scene.model.text) { _ in
 		}
 	}
 	var scenePresenter: ScenePresenter { return self }

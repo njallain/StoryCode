@@ -17,7 +17,8 @@ class DetailBackSegue : AnyActiveSegue {
 	}
 }
 public struct DetailSegue<SourceScene: SceneDefinition, DestinationScene: SceneDefinition>: SceneSegue {
-	public init() {}
+	public private(set) var name: String
+	public init(_ name: String) { self.name = name }
 	public func go<SourceController: SceneController, DestinationController: SceneController> (
 		presenter: ScenePresenter,
 		source: SourceController,

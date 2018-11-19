@@ -33,6 +33,7 @@
 		734A83FC21A18DF800116AEA /* Story.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734A83FB21A18DF800116AEA /* Story.swift */; };
 		734A83FE21A18F1000116AEA /* SampleModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734A83FD21A18F1000116AEA /* SampleModels.swift */; };
 		734A840021A19C1B00116AEA /* TestExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734A83FF21A19C1B00116AEA /* TestExtensions.swift */; };
+		734A840221A1AE6900116AEA /* StoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734A840121A1AE6900116AEA /* StoryTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -112,6 +113,7 @@
 		734A83FB21A18DF800116AEA /* Story.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Story.swift; sourceTree = "<group>"; };
 		734A83FD21A18F1000116AEA /* SampleModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleModels.swift; sourceTree = "<group>"; };
 		734A83FF21A19C1B00116AEA /* TestExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestExtensions.swift; sourceTree = "<group>"; };
+		734A840121A1AE6900116AEA /* StoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -229,6 +231,7 @@
 				734A83F521A189DB00116AEA /* TestSceneController.swift */,
 				734A83FD21A18F1000116AEA /* SampleModels.swift */,
 				734A83FF21A19C1B00116AEA /* TestExtensions.swift */,
+				734A840121A1AE6900116AEA /* StoryTests.swift */,
 			);
 			path = StoryCodeKitTests;
 			sourceTree = "<group>";
@@ -445,6 +448,7 @@
 			files = (
 				734A83F621A189DB00116AEA /* TestSceneController.swift in Sources */,
 				734A83E121A1837300116AEA /* SegueTests.swift in Sources */,
+				734A840221A1AE6900116AEA /* StoryTests.swift in Sources */,
 				734A83FE21A18F1000116AEA /* SampleModels.swift in Sources */,
 				734A840021A19C1B00116AEA /* TestExtensions.swift in Sources */,
 			);

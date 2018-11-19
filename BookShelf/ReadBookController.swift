@@ -10,12 +10,12 @@ import UIKit
 import StoryCodeKit
 
 struct ReadBookScene: SceneDefinition {
-	var name: String { return "read" }
 	typealias Model = String
+	func restoreValue(_ model: String) -> String { return model }
 }
 
 class ReadBookController: UIViewController, SceneController, ScenePresenter {
-	
+	let segues = ReadBookScene()
 	var scene: Scene<ReadBookScene>!
 	var scenePresenter: ScenePresenter { return self }
 	var textView: UITextView!

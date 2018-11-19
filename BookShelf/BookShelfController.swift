@@ -10,14 +10,14 @@ import UIKit
 import StoryCodeKit
 
 struct BookShelfScene: SceneDefinition {
-	var name: String { return "bookshelf" }
 	typealias Model = BookShelf
-	
-	let viewBook = DetailSegue<BookShelfScene, BookScene>()
+	func restoreValue(_ model: BookShelf) -> String { return "" }
+	let viewBook = DetailSegue<BookShelfScene, BookScene>("viewBook")
 }
 
 
 class BookShelfController: UITableViewController, SceneController, ScenePresenter {
+	let segues = BookShelfScene()
 	var scene: Scene<BookShelfScene>!
 	var scenePresenter: ScenePresenter { return self }
 	
@@ -49,7 +49,7 @@ class BookShelfController: UITableViewController, SceneController, ScenePresente
 	
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		let bookController = BookController()
-		self.go(\.viewBook, controller: bookController, model: scene.model.books[indexPath.row]) { [weak self] book in
+		self.go(segues.viewBook, controller: bookController, model: scene.model.books[indexPath.row]) { [weak self] book in
 			guard let self = self else { return }
 			self.scene.model.books[indexPath.row] = book
 			self.tableView.reloadRows(at: [indexPath], with: .automatic)

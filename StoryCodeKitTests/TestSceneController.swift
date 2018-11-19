@@ -10,6 +10,7 @@ import Foundation
 import StoryCodeKit
 
 class TestSceneController<SceneType: SceneDefinition>: SceneController, ScenePresenter {
+	let segues = SceneType()
 	var scene: Scene<SceneType>!
 	var pushedController: AnyObject?
 	var modalController: AnyObject?

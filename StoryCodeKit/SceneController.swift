@@ -28,18 +28,35 @@ public protocol ScenePresenter: AnyObject {
 }
 
 public extension SceneController {
+//	func go<DestinationController: SceneController, SegueType: SceneSegue>(
+//		_ path: KeyPath<SceneType, SegueType>,
+//		controller: DestinationController,
+//		model: DestinationController.SceneType.Model,
+//		modelChanged: @escaping (DestinationController.SceneType.Model) -> Void)
+//		where SegueType.SourceScene == SceneType, SegueType.DestinationScene == DestinationController.SceneType {
+//			let segue = self.scene.definition[keyPath: path]
+//			let sceneDef = DestinationController.SceneType()
+//			let destScene = Scene(definition: sceneDef, story: self.scene.story, model: model)
+//			destScene.modelChangedCallback = modelChanged
+//			controller.setup(scene: destScene)
+//			destScene.backSegue = segue.go(presenter: self.scenePresenter, source: self, destination: controller, options: [.animated])
+//	}
+//	
 	func go<DestinationController: SceneController, SegueType: SceneSegue>(
-		_ path: KeyPath<SceneType, SegueType>,
+		_ segue: SegueType,
 		controller: DestinationController,
 		model: DestinationController.SceneType.Model,
 		modelChanged: @escaping (DestinationController.SceneType.Model) -> Void)
 		where SegueType.SourceScene == SceneType, SegueType.DestinationScene == DestinationController.SceneType {
-			let segue = self.scene.definition[keyPath: path]
 			let sceneDef = DestinationController.SceneType()
+			let restoreValue = sceneDef.restoreValue(model)
+			var story = self.scene.story
+			story.presenting(name: segue.name, restoreValue: restoreValue)
 			let destScene = Scene(definition: sceneDef, story: self.scene.story, model: model)
 			destScene.modelChangedCallback = modelChanged
 			controller.setup(scene: destScene)
 			destScene.backSegue = segue.go(presenter: self.scenePresenter, source: self, destination: controller, options: [.animated])
+			
 	}
 	
 	func finish(_ viewModel: SceneType.Model) {

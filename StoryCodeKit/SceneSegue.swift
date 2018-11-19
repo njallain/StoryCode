@@ -17,7 +17,11 @@ public struct SegueOptions: OptionSet {
 }
 
 
-public protocol SceneSegue {
+public protocol AnySceneSegue {
+	var name: String {get}
+}
+
+public protocol SceneSegue: AnySceneSegue {
 	associatedtype SourceScene: SceneDefinition
 	associatedtype DestinationScene: SceneDefinition
 	func go<SourceController: SceneController, DestinationController: SceneController> (
@@ -26,7 +30,6 @@ public protocol SceneSegue {
 		destination: DestinationController,
 		options: SegueOptions) -> AnyActiveSegue
 		where SourceController.SceneType == SourceScene, DestinationController.SceneType == DestinationScene
-	
 }
 
 public protocol AnyActiveSegue {

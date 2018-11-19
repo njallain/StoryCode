@@ -24,24 +24,34 @@ struct Npc {
 }
 
 struct RootScene: SceneDefinition {
-	var name: String { return "root" }
+	func restoreValue(_ model: [Campaign]) -> String { return "" }
 	typealias Model = [Campaign]
-	let viewCampaign = DetailSegue<RootScene, CampaignScene>()
+	let viewCampaign = DetailSegue<RootScene, CampaignScene>("viewCampaign")
 }
 
 struct CampaignScene: SceneDefinition {
-	var name: String { return "campaign" }
 	typealias Model = Campaign
+	func restoreValue(_ model: Campaign) -> String { return "\(model.id)" }
+	let viewNpc = NavigationSegue<CampaignScene, NpcScene>("viewNpc")
+	let editName = ModalSegue<CampaignScene, TextScene>("editName")
 }
 
 struct NpcScene: SceneDefinition {
-	var name: String { return "npc" }
 	typealias Model = Npc
+	func restoreValue(_ model: Npc) -> String { return "\(model.id)" }
+	let editName = ModalSegue<NpcScene, TextScene>("editName")
+	let editRace = ModalSegue<NpcScene, TextScene>("editRace")
+}
+
+struct TextScene: SceneDefinition {
+	typealias Model = String
+	func restoreValue(_ model: String) -> String { return model }
 }
 
 typealias RootController = TestSceneController<RootScene>
 typealias CampaignController = TestSceneController<CampaignScene>
 typealias NpcController = TestSceneController<NpcScene>
+typealias TextController = TestSceneController<TextScene>
 
 func sampleCampaigns() -> [Campaign] {
 	let npc1 = Npc(id: 1, name: "Aragon", race: "Human")
