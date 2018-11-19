@@ -12,9 +12,9 @@ import StoryCodeKit
 struct BookScene: SceneDefinition {
 	typealias Model = Book
 	func restoreValue(_ model: Book) -> String { return "\(model.id)" }
-	let editTitle = ModalSegue<BookScene, EditTextScene>("editTitle")
-	let editDescription = ModalSegue<BookScene, EditTextScene>("editDescription")
-	let read = NavigationSegue<BookScene, ReadBookScene>("read")
+	let editTitle = ModalSegue<BookScene, EditTextScene>("editTitle", restore: {m,_ in return EditText(text: m.title)})
+	let editDescription = ModalSegue<BookScene, EditTextScene>("editDescription", restore: { m,_ in return EditText(text:m.description) })
+	let read = NavigationSegue<BookScene, ReadBookScene>("read", restore: { m,_ in return m.text })
 }
 class BookController: UIViewController, SceneController, ScenePresenter {
 	let segues = BookScene()
@@ -114,10 +114,8 @@ class BookController: UIViewController, SceneController, ScenePresenter {
 
 	func restore(scene: Story.Scene) -> AnySceneController? {
 		if scene.name == segues.read.name {
-			let readController = ReadBookController()
-			self.go(segues.read, controller: readController, model: self.scene.model.text, presenter: scenePresenter, options: []) { _ in
+			return self.restore(self.segues.read, controller: ReadBookController(), parentModel: self.scene.model, restoreValue: scene.restoreValue) { _ in
 			}
-			return readController
 		}
 		
 		return nil

@@ -65,6 +65,45 @@ public extension SceneController {
 		controller: DestinationController,
 		model: DestinationController.SceneType.Model,
 		presenter: ScenePresenter,
+		modelChanged: @escaping (DestinationController.SceneType.Model) -> Void)
+		where SegueType.SourceScene == SceneType, SegueType.DestinationScene == DestinationController.SceneType {
+			self.go(segue, controller: controller, model: model, presenter: presenter, options: [.animated], modelChanged: modelChanged)
+	}
+	
+	func restore<DestinationController: SceneController, SegueType: SceneSegue>(
+		_ segue: SegueType,
+		controller: DestinationController,
+		parentModel: SegueType.SourceScene.Model,
+		restoreValue: String,
+		modelChanged: @escaping (DestinationController.SceneType.Model) -> Void) -> DestinationController?
+		where SegueType.SourceScene == SceneType, SegueType.DestinationScene == DestinationController.SceneType {
+			let presenter = self.scenePresenter
+			return self.restore(segue,
+				controller: controller,
+				parentModel: parentModel,
+				restoreValue: restoreValue,
+				presenter: presenter,
+				modelChanged: modelChanged)
+	}
+	
+	func restore<DestinationController: SceneController, SegueType: SceneSegue>(
+		_ segue: SegueType,
+		controller: DestinationController,
+		parentModel: SegueType.SourceScene.Model,
+		restoreValue: String,
+		presenter: ScenePresenter,
+		modelChanged: @escaping (DestinationController.SceneType.Model) -> Void) -> DestinationController?
+		where SegueType.SourceScene == SceneType, SegueType.DestinationScene == DestinationController.SceneType {
+		guard let model = segue.restore?(parentModel, restoreValue) else { return nil }
+		self.go(segue, controller: controller, model: model, presenter: presenter, options: [], modelChanged: modelChanged)
+		return controller
+	}
+	
+	func go<DestinationController: SceneController, SegueType: SceneSegue>(
+		_ segue: SegueType,
+		controller: DestinationController,
+		model: DestinationController.SceneType.Model,
+		presenter: ScenePresenter,
 		options: SegueOptions,
 		modelChanged: @escaping (DestinationController.SceneType.Model) -> Void)
 		where SegueType.SourceScene == SceneType, SegueType.DestinationScene == DestinationController.SceneType {
