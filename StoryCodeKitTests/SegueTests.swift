@@ -54,7 +54,7 @@ class SegueTests: XCTestCase {
 	}
 	override func setUp() {
 		root = RootController()
-		story = Story()
+		story = Story(storage: TestStorage())
 		campaigns = sampleCampaigns()
 		campaignController = CampaignController()
 		textController = TextController()
@@ -66,7 +66,7 @@ class SegueTests: XCTestCase {
 	}
 	
 	private var root =  RootController()
-	private var story = Story()
+	private var story = Story(storage: TestStorage())
 	private var campaigns: [Campaign] = []
 	private var campaignController = CampaignController()
 	private var npcController = NpcController()

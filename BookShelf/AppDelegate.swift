@@ -25,6 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		self.window = window
 		window.backgroundColor = .white
 		let bookshelfController = BookShelfController()
+		Story.appName = "bookshelf"
 		let story = Story()
 		let scene = Scene(definition: BookShelfScene(), story: story, model: bookshelf)
 		bookshelfController.setup(scene: scene)

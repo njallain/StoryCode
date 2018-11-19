@@ -10,15 +10,35 @@ import XCTest
 @testable import StoryCodeKit
 
 class StoryTests: XCTestCase {
-	func testPath() {
-		let story = Story()
-		assertEqual("", story.path)
-		var next = story
-		next.presenting(name: "campaign", restoreValue: "")
-		assertEqual("/campaign", next.path)
-		next.presenting(name: "npc", restoreValue: "")
-		assertEqual("/campaign/npc", next.path)
-		assertEqual("", story.path)
+	func testRestoreUrl() {
+		var story = Story()
+		story.presenting(name: "campaign", restoreValue: "a b")
+		story.presenting(name: "npc", restoreValue: "c&d")
+		assertEqual("story://\(Story.appName)/campaign/npc?v=a%20b&v=c%26d", story.restoreUrl?.absoluteString)
+	}
+	
+	func testStoreAndRestore() {
+		let storage = TestStorage()
+		let story = Story(storage: storage)
+		var another = story
+		another.presenting(name: "npc", restoreValue: "value")
+		assertTrue(another.storage === story.storage)
+		assertEqual(another.restoreUrl, storage.value)
+		
+		let restoredStory = Story(storage: storage, restore: true)
+		assertEqual(storage.value, restoredStory.restoreUrl)
+		//assertEqual(another.restoreValue, storage.storyRestoreValue)
+	}
+}
+
+
+class TestStorage: StoryStorage {
+	var value: URL?
+	public func save(storyRestoreUrl: URL) {
+		value = storyRestoreUrl
+	}
+	public var storyRestoreUrl: URL? {
+		return value
 	}
 
 }
