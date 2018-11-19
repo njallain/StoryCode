@@ -110,4 +110,16 @@ class BookController: UIViewController, SceneController, ScenePresenter {
 		}
 	}
 	var scenePresenter: ScenePresenter { return self }
+
+
+	func restore(scene: Story.Scene) -> AnySceneController? {
+		if scene.name == segues.read.name {
+			let readController = ReadBookController()
+			self.go(segues.read, controller: readController, model: self.scene.model.text, presenter: scenePresenter, options: []) { _ in
+			}
+			return readController
+		}
+		
+		return nil
+	}
 }

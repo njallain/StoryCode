@@ -26,8 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		window.backgroundColor = .white
 		let bookshelfController = BookShelfController()
 		Story.appName = "bookshelf"
-		let story = Story()
-		let scene = Scene(definition: BookShelfScene(), story: story, model: bookshelf)
+		let scene = Scene(definition: BookShelfScene(), story: Story(), model: bookshelf)
 		bookshelfController.setup(scene: scene)
 		let nav = UINavigationController(rootViewController: bookshelfController)
 //		let detailScene = Scene(definition: BookScene(), story: story, model: .none)
@@ -35,9 +34,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //		bookController.setup(scene: detailScene)
 		let splitView = UISplitViewController()
 		splitView.viewControllers = [nav, UINavigationController(rootViewController: UIViewController())]
+		splitView.preferredDisplayMode = .allVisible
 		splitView.delegate = self
 		nav.delegate = self
 		window.rootViewController = splitView
+		
+		let restoredStory = Story(restore: true)
+		bookshelfController.restoreAll(scenes: restoredStory.scenes)
 		window.makeKeyAndVisible()
 		return true
 	}
@@ -69,7 +72,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
 extension AppDelegate: UISplitViewControllerDelegate {
-
+	func splitViewController(
+		_ splitViewController: UISplitViewController,
+		collapseSecondary secondaryViewController: UIViewController,
+		onto primaryViewController: UIViewController) -> Bool {
+		// Return true to prevent UIKit from applying its default behavior
+		return true
+	}
 }
 
 extension AppDelegate: UINavigationControllerDelegate {

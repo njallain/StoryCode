@@ -11,7 +11,7 @@ import StoryCodeKit
 
 struct ReadBookScene: SceneDefinition {
 	typealias Model = String
-	func restoreValue(_ model: String) -> String { return model }
+	func restoreValue(_ model: String) -> String { return "" }
 }
 
 class ReadBookController: UIViewController, SceneController, ScenePresenter {

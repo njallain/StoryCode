@@ -10,6 +10,11 @@ import Foundation
 
 public struct BookShelf {
 	public var books: [Book]
+	
+	static func restoreBook(_ bookShelf: BookShelf, _ restoreValue: String) -> Book? {
+		guard let bookId = Int(restoreValue) else { return nil }
+		return bookShelf.books.first { $0.id == bookId }
+	}
 }
 
 private var nextBookId = 1

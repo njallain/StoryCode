@@ -12,7 +12,7 @@ import StoryCodeKit
 struct BookShelfScene: SceneDefinition {
 	typealias Model = BookShelf
 	func restoreValue(_ model: BookShelf) -> String { return "" }
-	let viewBook = DetailSegue<BookShelfScene, BookScene>("viewBook")
+	let viewBook = DetailSegue<BookShelfScene, BookScene>("viewBook", restore: BookShelf.restoreBook)
 }
 
 
@@ -56,4 +56,20 @@ class BookShelfController: UITableViewController, SceneController, ScenePresente
 		}
 	}
 	
+	func restore(scene: Story.Scene) -> AnySceneController? {
+		if scene.name == segues.viewBook.name {
+			
+			guard let book = segues.viewBook.restore?(self.scene.model, scene.restoreValue) else { return nil }
+			let bookController = BookController()
+			self.go(segues.viewBook, controller: bookController, model: book, presenter: self.scenePresenter, options: []) { [weak self] book in
+				guard let self = self else { return }
+				guard let bookIndex = self.scene.model.books.firstIndex(where: { $0.id == book.id }) else { return }
+				self.scene.model.books[bookIndex] = book
+				self.tableView.reloadRows(at: [IndexPath(row: bookIndex, section: 0)], with: .automatic)
+			}
+			return bookController
+		}
+		
+		return nil
+	}
 }

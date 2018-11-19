@@ -28,12 +28,12 @@ public extension SceneController where Self: UIViewController {
 		self.dismiss(animated: options.contains(.animated))
 	}
 	func showDetailScene<Controller: SceneController>(controller: Controller, options: SegueOptions) {
-		guard let vc = controller as? UIViewController else { return }
+		guard let vc = controller as? UIViewController, let splitVc = self.splitViewController else { return }
 		if let nav = vc.navigationController {
-			self.splitViewController?.showDetailViewController(nav, sender: nil)
+			splitVc.showDetailViewController(nav, sender: nil)
 		} else {
 			let nav = UINavigationController(rootViewController: vc)
-			self.splitViewController?.showDetailViewController(nav, sender: nil)
+			splitVc.showDetailViewController(nav, sender: nil)
 		}
 	}
 }

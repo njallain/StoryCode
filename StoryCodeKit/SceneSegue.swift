@@ -24,15 +24,17 @@ public protocol AnySceneSegue {
 public protocol SceneSegue: AnySceneSegue {
 	associatedtype SourceScene: SceneDefinition
 	associatedtype DestinationScene: SceneDefinition
+	typealias RestoreFunction = (SourceScene.Model, String) -> DestinationScene.Model?
 	func go<SourceController: SceneController, DestinationController: SceneController> (
 		presenter: ScenePresenter,
 		source: SourceController,
 		destination: DestinationController,
-		options: SegueOptions) -> AnyActiveSegue
+		options: SegueOptions) -> BackSegue
 		where SourceController.SceneType == SourceScene, DestinationController.SceneType == DestinationScene
+	var restore: RestoreFunction? {get}
 }
 
-public protocol AnyActiveSegue {
+public protocol BackSegue {
 	func back(_ options: SegueOptions)
 }
 

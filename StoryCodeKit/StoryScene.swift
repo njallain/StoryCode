@@ -22,7 +22,7 @@ public class Scene<Definition: SceneDefinition> {
 	public let definition: Definition
 	public let story: Story
 	public var model: Definition.Model
-	var backSegue: AnyActiveSegue? = nil
+	var backSegue: BackSegue? = nil
 	var modelChangedCallback: (Definition.Model) -> Void = {_ in return}
 	public init(definition: Definition, story: Story, model: Definition.Model) {
 		self.model = model
