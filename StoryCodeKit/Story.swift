@@ -41,6 +41,11 @@ public struct Story {
 	}
 	let storage: StoryStorage
 	public private(set) var scenes = [Scene]()
+	public func presenting() {
+		if let url = self.restoreUrl {
+			self.storage.save(storyRestoreUrl: url)
+		}
+	}
 	public mutating func presenting(name: String, restoreValue: String) {
 		scenes.append(Scene(name: name, restoreValue: restoreValue))
 		if let url = self.restoreUrl {
@@ -52,7 +57,6 @@ public struct Story {
 	}
 	
 	var restoreUrl: URL? {
-		guard scenes.count > 0 else { return nil }
 	  var components = URLComponents()
 	  components.scheme = Story.urlScheme
 	  components.host = Story.appName

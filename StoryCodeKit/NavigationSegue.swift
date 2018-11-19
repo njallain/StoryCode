@@ -10,11 +10,16 @@ import Foundation
 
 class NavigationBackSegue : BackSegue {
 	weak var presenter: ScenePresenter?
-	init(presenter: ScenePresenter) {
+	let previousStory: Story
+	init(presenter: ScenePresenter, previousStory: Story) {
 		self.presenter = presenter
+		self.previousStory = previousStory
 	}
 	func back(_ options: SegueOptions) {
 		presenter?.popScene(options: options)
+	}
+	deinit {
+		previousStory.presenting()
 	}
 }
 public struct NavigationSegue<SourceScene: SceneDefinition, DestinationScene: SceneDefinition>: SceneSegue {
@@ -31,7 +36,7 @@ public struct NavigationSegue<SourceScene: SceneDefinition, DestinationScene: Sc
 		options: SegueOptions) -> BackSegue
 		where SourceController.SceneType == SourceScene, DestinationController.SceneType == DestinationScene {
 			presenter.pushScene(controller: destination, options: options)
-			return NavigationBackSegue(presenter: presenter)
+			return NavigationBackSegue(presenter: presenter, previousStory: source.scene.story)
 			
 	}
 }
