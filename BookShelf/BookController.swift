@@ -91,7 +91,7 @@ class BookController: UIViewController, SceneController, ScenePresenter {
 			segues.editTitle,
 			controller: controller,
 			model: model,
-			style: SegueStyle.viewMiddle()) { [weak self] textModel in
+			style: SegueStyle.popoverFrom(view: editTitleButton, arrow: .any)) { [weak self] textModel in
 			guard let self = self else {return}
 			self.scene.model.title = textModel.text
 			self.titleLabel.text = textModel.text
@@ -101,7 +101,11 @@ class BookController: UIViewController, SceneController, ScenePresenter {
 	@objc func editDescription(_ sender: UIButton) {
 		let controller = EditTextController()
 		let model = EditText(text: scene.model.description)
-		self.go(segues.editDescription, controller: controller, model: model) { [weak self] textModel in
+		self.go(
+			segues.editDescription,
+			controller: controller,
+			model: model,
+			style: SegueStyle.popoverFrom(view: editDescriptionButton, arrow: .any)) { [weak self] textModel in
 			guard let self = self else {return}
 			self.scene.model.description = textModel.text
 			self.descriptionLabel.text = textModel.text

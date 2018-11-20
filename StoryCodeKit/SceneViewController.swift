@@ -42,29 +42,40 @@ public extension SceneController where Self: UIViewController {
 }
 
 public extension SegueStyle {
-	public static func viewMiddle() -> SegueStyle {
-		return SegueStyle([.animated], popover: SegueViewPopover())
+	public static func popoverMiddle() -> SegueStyle {
+		return SegueStyle([.animated], popover: SegueViewPopover(sourceView: nil, sourceRect: .zero, arrow: .none))
+	}
+	public static func popoverFrom(view: UIView, arrow: UIPopoverArrowDirection = .none) -> SegueStyle {
+		return SegueStyle([.animated], popover: SegueViewPopover(sourceView: view, sourceRect: view.bounds, arrow: arrow))
 	}
 }
+
+public extension UIPopoverArrowDirection {
+	static let none = UIPopoverArrowDirection(rawValue: 0)
+}
+
 public class SegueViewPopover: NSObject, SeguePopover {
-	private var sourceView: UIView? = nil
-	private var sourceRect = CGRect.zero
+	private var sourceView: UIView?
+	private var sourceRect: CGRect
+	private var arrow: UIPopoverArrowDirection
+	
+	fileprivate init(sourceView: UIView?, sourceRect: CGRect, arrow: UIPopoverArrowDirection) {
+		self.sourceView = sourceView
+		self.sourceRect = sourceRect
+		self.arrow = arrow
+	}
 	public func setup(source: AnySceneController, destination: AnySceneController) {
 		guard let sourceVc = source as? UIViewController, let destVc = destination as? UIViewController else { return }
 		destVc.modalPresentationStyle = .popover
 		guard let popover = destVc.popoverPresentationController else { return }
 		popover.delegate = self
-		popover.permittedArrowDirections = UIPopoverArrowDirection(rawValue: 0)
+		popover.permittedArrowDirections = arrow
+		popover.canOverlapSourceViewRect = true
 		let view = self.sourceView ?? sourceVc.viewIfLoaded
 		guard let sourceView = view else { return }
 		popover.sourceView = sourceView
 		popover.sourceRect = sourceRect != .zero ? sourceRect
 			: CGRect(x: sourceView.bounds.midX, y: sourceView.bounds.midY, width: 1, height: 1)
-	}
-	func setupSource(popover: UIPopoverPresentationController, source: UIViewController) {
-		guard let presentingView = source.viewIfLoaded else { return }
-		popover.sourceView = presentingView
-		popover.sourceRect = CGRect(x: presentingView.bounds.midX, y: presentingView.bounds.midY, width: 1, height: 1)
 	}
 }
 extension SegueViewPopover: UIPopoverPresentationControllerDelegate {

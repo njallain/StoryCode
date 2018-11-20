@@ -22,7 +22,7 @@ class EditTextController: UIViewController, SceneController, ScenePresenter {
 	var doneButton: UIButton!
 	
 	func setup(scene: Scene<EditTextScene>) {
-		self.preferredContentSize = CGSize(width: 300, height: 400)
+		self.preferredContentSize = CGSize(width: 350, height: 250)
 		self.scene = scene
 	}
 	
