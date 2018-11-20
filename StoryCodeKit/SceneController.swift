@@ -27,11 +27,11 @@ public protocol SceneController: AnySceneController {
 Handles the platform specific scene presentation.
 */
 public protocol ScenePresenter: AnyObject {
-	func pushScene<Controller: SceneController>(controller: Controller, options: SegueOptions)
-	func popScene(options: SegueOptions)
-	func showModalScene<Controller: SceneController>(controller: Controller, options: SegueOptions)
-	func dismissModalScene(options: SegueOptions)
-	func showDetailScene<Controller: SceneController>(controller: Controller, options: SegueOptions)
+	func pushScene<Controller: SceneController>(controller: Controller, style: SegueStyle)
+	func popScene(style: SegueStyle)
+	func showModalScene<Controller: SceneController>(controller: Controller, style: SegueStyle)
+	func dismissModalScene(style: SegueStyle)
+	func showDetailScene<Controller: SceneController>(controller: Controller, style: SegueStyle)
 }
 
 public extension AnySceneController {
@@ -57,7 +57,7 @@ public extension SceneController {
 		modelChanged: @escaping (DestinationController.SceneType.Model) -> Void)
 		where SegueType.SourceScene == SceneType, SegueType.DestinationScene == DestinationController.SceneType {
 			let presenter = self.scenePresenter
-			self.go(segue, controller: controller, model: model, presenter: presenter, options: [.animated], modelChanged: modelChanged)
+			self.go(segue, controller: controller, model: model, presenter: presenter, style: .animated, modelChanged: modelChanged)
 	}
 	
 	func go<DestinationController: SceneController, SegueType: SceneSegue>(
@@ -67,9 +67,19 @@ public extension SceneController {
 		presenter: ScenePresenter,
 		modelChanged: @escaping (DestinationController.SceneType.Model) -> Void)
 		where SegueType.SourceScene == SceneType, SegueType.DestinationScene == DestinationController.SceneType {
-			self.go(segue, controller: controller, model: model, presenter: presenter, options: [.animated], modelChanged: modelChanged)
+			self.go(segue, controller: controller, model: model, presenter: presenter, style: .animated, modelChanged: modelChanged)
 	}
-	
+
+	func go<DestinationController: SceneController, SegueType: SceneSegue>(
+		_ segue: SegueType,
+		controller: DestinationController,
+		model: DestinationController.SceneType.Model,
+		style: SegueStyle,
+		modelChanged: @escaping (DestinationController.SceneType.Model) -> Void)
+		where SegueType.SourceScene == SceneType, SegueType.DestinationScene == DestinationController.SceneType {
+			self.go(segue, controller: controller, model: model, presenter: self.scenePresenter, style: style, modelChanged: modelChanged)
+	}
+
 	func restore<DestinationController: SceneController, SegueType: SceneSegue>(
 		_ segue: SegueType,
 		controller: DestinationController,
@@ -95,7 +105,7 @@ public extension SceneController {
 		modelChanged: @escaping (DestinationController.SceneType.Model) -> Void) -> DestinationController?
 		where SegueType.SourceScene == SceneType, SegueType.DestinationScene == DestinationController.SceneType {
 		guard let model = segue.restore?(parentModel, restoreValue) else { return nil }
-		self.go(segue, controller: controller, model: model, presenter: presenter, options: [], modelChanged: modelChanged)
+		self.go(segue, controller: controller, model: model, presenter: presenter, style: .restore, modelChanged: modelChanged)
 		return controller
 	}
 	
@@ -104,7 +114,7 @@ public extension SceneController {
 		controller: DestinationController,
 		model: DestinationController.SceneType.Model,
 		presenter: ScenePresenter,
-		options: SegueOptions,
+		style: SegueStyle,
 		modelChanged: @escaping (DestinationController.SceneType.Model) -> Void)
 		where SegueType.SourceScene == SceneType, SegueType.DestinationScene == DestinationController.SceneType {
 			let sceneDef = DestinationController.SceneType()
@@ -114,7 +124,7 @@ public extension SceneController {
 			let destScene = Scene(definition: sceneDef, story: story, model: model)
 			destScene.modelChangedCallback = modelChanged
 			controller.setup(scene: destScene)
-			destScene.backSegue = segue.go(presenter: presenter, source: self, destination: controller, options: options)
+			destScene.backSegue = segue.go(presenter: presenter, source: self, destination: controller, style: style)
 			
 	}
 	
@@ -124,7 +134,7 @@ public extension SceneController {
 		guard let backSegue = self.scene.backSegue else {
 			return
 		}
-		backSegue.back([.animated])
+		backSegue.back(.animated)
 	}
 }
 

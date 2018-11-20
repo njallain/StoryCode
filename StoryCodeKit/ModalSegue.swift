@@ -18,8 +18,8 @@ class ModalBackSegue : BackSegue {
 	deinit {
 		previousStory.presenting()
 	}
-	func back(_ options: SegueOptions) {
-		presenter?.dismissModalScene(options: options)
+	func back(_ style: SegueStyle) {
+		presenter?.dismissModalScene(style: style)
 	}
 }
 
@@ -35,9 +35,9 @@ public struct ModalSegue<SourceScene: SceneDefinition, DestinationScene: SceneDe
 		presenter: ScenePresenter,
 		source: SourceController,
 		destination: DestinationController,
-		options: SegueOptions) -> BackSegue
+		style: SegueStyle) -> BackSegue
 		where SourceController.SceneType == SourceScene, DestinationController.SceneType == DestinationScene {
-			presenter.showModalScene(controller: destination, options: options)
+			presenter.showModalScene(controller: destination, style: style)
 			return ModalBackSegue(presenter: presenter, previousStory: source.scene.story)
 	}
 	

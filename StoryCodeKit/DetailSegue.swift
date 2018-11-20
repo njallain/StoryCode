@@ -18,7 +18,7 @@ class DetailBackSegue : BackSegue {
 	deinit {
 		previousStory.presenting()
 	}
-	func back(_ options: SegueOptions) {
+	func back(_ style: SegueStyle) {
 	}
 }
 public struct DetailSegue<SourceScene: SceneDefinition, DestinationScene: SceneDefinition>: SceneSegue {
@@ -32,9 +32,9 @@ public struct DetailSegue<SourceScene: SceneDefinition, DestinationScene: SceneD
 		presenter: ScenePresenter,
 		source: SourceController,
 		destination: DestinationController,
-		options: SegueOptions) -> BackSegue
+		style: SegueStyle) -> BackSegue
 		where SourceController.SceneType == SourceScene, DestinationController.SceneType == DestinationScene {
-			presenter.showDetailScene(controller: destination, options: options)
+			presenter.showDetailScene(controller: destination, style: style)
 			return DetailBackSegue(presenter: presenter, previousStory: source.scene.story)
 			
 	}

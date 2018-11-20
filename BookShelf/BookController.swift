@@ -87,7 +87,11 @@ class BookController: UIViewController, SceneController, ScenePresenter {
 	@objc func editTitle(_ sender: UIButton) {
 		let controller = EditTextController()
 		let model = EditText(text: scene.model.title)
-		self.go(segues.editTitle, controller: controller, model: model) { [weak self] textModel in
+		self.go(
+			segues.editTitle,
+			controller: controller,
+			model: model,
+			style: SegueStyle.viewMiddle()) { [weak self] textModel in
 			guard let self = self else {return}
 			self.scene.model.title = textModel.text
 			self.titleLabel.text = textModel.text

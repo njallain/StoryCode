@@ -24,23 +24,23 @@ class TestSceneController<SceneType: SceneDefinition>: SceneController, ScenePre
 	
 	var scenePresenter: ScenePresenter { return self }
 	
-	func pushScene<Controller>(controller: Controller, options: SegueOptions) where Controller : SceneController {
+	func pushScene<Controller>(controller: Controller, style: SegueStyle) where Controller : SceneController {
 		pushedController = controller
 	}
 	
-	func popScene(options: SegueOptions) {
+	func popScene(style: SegueStyle) {
 		pushedController = nil
 	}
 	
-	func showModalScene<Controller>(controller: Controller, options: SegueOptions) where Controller : SceneController {
+	func showModalScene<Controller>(controller: Controller, style: SegueStyle) where Controller : SceneController {
 		modalController = controller
 	}
 	
-	func dismissModalScene(options: SegueOptions) {
+	func dismissModalScene(style: SegueStyle) {
 		modalController = nil
 	}
 	
-	func showDetailScene<Controller>(controller: Controller, options: SegueOptions) where Controller : SceneController {
+	func showDetailScene<Controller>(controller: Controller, style: SegueStyle) where Controller : SceneController {
 		detailController = controller
 	}
 }

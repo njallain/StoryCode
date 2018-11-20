@@ -15,8 +15,8 @@ class NavigationBackSegue : BackSegue {
 		self.presenter = presenter
 		self.previousStory = previousStory
 	}
-	func back(_ options: SegueOptions) {
-		presenter?.popScene(options: options)
+	func back(_ style: SegueStyle) {
+		presenter?.popScene(style: style)
 	}
 	deinit {
 		previousStory.presenting()
@@ -33,9 +33,9 @@ public struct NavigationSegue<SourceScene: SceneDefinition, DestinationScene: Sc
 		presenter: ScenePresenter,
 		source: SourceController,
 		destination: DestinationController,
-		options: SegueOptions) -> BackSegue
+		style: SegueStyle) -> BackSegue
 		where SourceController.SceneType == SourceScene, DestinationController.SceneType == DestinationScene {
-			presenter.pushScene(controller: destination, options: options)
+			presenter.pushScene(controller: destination, style: style)
 			return NavigationBackSegue(presenter: presenter, previousStory: source.scene.story)
 			
 	}
