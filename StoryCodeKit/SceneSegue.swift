@@ -11,14 +11,13 @@ import Foundation
 public struct SegueOptions: OptionSet {
 	public let rawValue: Int
 	public static let animated = SegueOptions(rawValue: 1 << 0)
-	public static let popover = SegueOptions(rawValue: 1 << 1)
 	public init(rawValue: Int) {
 		self.rawValue = rawValue
 	}
 }
 
-public protocol SeguePopover {
-	func setup(source: AnySceneController, destination: AnySceneController)
+public protocol SeguePresentation {
+	func setup(source: AnySceneController, destination: AnySceneController) -> AnySceneController
 }
 public struct SegueStyle {
 	public static let animated = SegueStyle([.animated])
@@ -26,14 +25,14 @@ public struct SegueStyle {
 	
 	public init(_ options: SegueOptions) {
 		self.options = options
-		popover = nil
+		presentation = nil
 	}
-	public init(_ options: SegueOptions, popover: SeguePopover) {
-		self.options = options.union(.popover)
-		self.popover = popover
+	public init(_ options: SegueOptions, popover: SeguePresentation) {
+		self.options = options
+		self.presentation = popover
 	}
 	public let options: SegueOptions
-	var popover: SeguePopover?
+	var presentation: SeguePresentation?
 }
 
 
