@@ -23,11 +23,19 @@ public extension SceneController where Self: UIViewController {
 	func showModalScene<Controller: SceneController>(controller: Controller, style: SegueStyle) {
 		let finalController = style.presentation?.setup(source: self, destination: controller) ?? controller
 		guard let vc = finalController as? UIViewController else { return }
-		self.present(vc, animated: style.options.contains(.animated))
+		if let split = self.splitViewController {
+			split.present(vc, animated: style.options.contains(.animated))
+		} else {
+			self.present(vc, animated: style.options.contains(.animated))
+		}
 	}
 	
 	func dismissModalScene(style: SegueStyle) {
-		self.dismiss(animated: style.options.contains(.animated))
+		if let split = self.splitViewController {
+			split.dismiss(animated: style.options.contains(.animated))
+		} else {
+			self.dismiss(animated: style.options.contains(.animated))
+		}
 	}
 	func showDetailScene<Controller: SceneController>(controller: Controller, style: SegueStyle) {
 		guard let vc = controller as? UIViewController, let splitVc = self.splitViewController else { return }
@@ -53,6 +61,12 @@ public extension SegueStyle {
 	public static func transparent(cover viewToCover: UIView, in presentingView: UIView) -> SegueStyle {
 		let frame = viewToCover.convert(viewToCover.bounds, to: presentingView)
 		return transparent(frame: frame)
+	}
+	public static func transparent(size: CGSize) -> SegueStyle {
+		let presentation = TransparentModalPresentation()
+		presentation.presentationFrame = CGRect(origin: .zero, size: size)
+		presentation.center = true
+		return SegueStyle([.animated], popover: presentation)
 	}
 	public static func transparent(frame: CGRect) -> SegueStyle {
 		let presentation = TransparentModalPresentation()
@@ -98,8 +112,13 @@ extension SegueViewPopover: UIPopoverPresentationControllerDelegate {
 	}
 }
 
-public class TransparentModalPresentation: UIViewController, SeguePresentation, AnySceneController {
+/**
+Wraps a modal view controller with a transparent background
+*/
+fileprivate class TransparentModalPresentation: UIViewController, SeguePresentation, AnySceneController {
 	fileprivate var presentationFrame: CGRect = .zero
+	fileprivate var center = false
+	//private var border = CGSize(width: 5.0, height: 5.0)
 	private var embedded: UIViewController!
 	public func setup(source: AnySceneController, destination: AnySceneController) -> AnySceneController {
 		guard let destVc = destination as? UIViewController else { return destination }
@@ -111,8 +130,36 @@ public class TransparentModalPresentation: UIViewController, SeguePresentation, 
 	}
 	
 	public override func viewDidLoad() {
-		embedded.view.frame = presentationFrame
+		view.backgroundColor = UIColor.gray.withAlphaComponent(0.5)
+		var frame = presentationFrame
+		if center {
+			frame.origin = CGPoint(x: view.frame.midX - frame.midX, y: view.frame.midY - frame.midY)
+		}
+//		let shadowFrame = frame.insetBy(dx: -border.width, dy: -border.height)
+		let shadowFrame = frame
+		//let innerFrame = CGRect(origin: CGPoint(x: border.width, y: border.height), size: frame.size)
+		let innerFrame = CGRect(origin: .zero, size: frame.size)
+		let shadowView = UIView(frame: shadowFrame)
+		shadowView.layer.shadowColor = UIColor.black.cgColor
+		shadowView.layer.shadowOffset = CGSize.zero
+		shadowView.layer.shadowOpacity = 0.5
+		shadowView.layer.shadowRadius = 5
+		shadowView.autoresizingMask = [.flexibleRightMargin, .flexibleBottomMargin]
+		embedded.view.frame = innerFrame
+		embedded.view.layer.cornerRadius = 10.0
+		embedded.view.layer.borderColor = UIColor.gray.cgColor
+		embedded.view.layer.borderWidth = 0.5
+		embedded.view.clipsToBounds = true
 		embedded.view.autoresizingMask = [.flexibleRightMargin, .flexibleBottomMargin]
-		view.addSubview(embedded.view)
+		shadowView.addSubview(embedded.view)
+		view.addSubview(shadowView)
+	}
+	
+	private class BackgroundView: UIView {
+		var backgroundRect = CGRect.zero
+		var cornerRadius = 0
+		public override func draw(_ rect: CGRect) {
+			
+		}
 	}
 }
